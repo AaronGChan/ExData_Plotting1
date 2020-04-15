@@ -1,0 +1,10 @@
+setwd("exdata_data_household_power_consumption")
+data <- read.table("household_power_consumption.txt", sep = ';', header=T, na.strings = "?")
+data <- data[data$Date == "1/2/2007"|data$Date == "2/2/2007",]
+setwd('..')
+data$datetime <- strptime(paste(data$Date, data$Time), "%d/%m/%Y %H:%M:%S")
+head(data)
+#data$Global_active_power <- gsub("?",NA,data$Global_active_power, fixed = TRUE)
+png("plot2.png", width = 480, height = 480)
+with(data,{plot(datetime, Global_active_power, type = "l",xlab = "", ylab = "Global Active Power (kilowatts)")})
+dev.off()
